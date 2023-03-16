@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:talents_valley_hackthon/controller/provider/payoutProvider/payout_provider.dart';
 
 class AppRouter {
   AppRouter._();
@@ -10,11 +11,11 @@ class AppRouter {
   }
 
   static goTo(String screenName, {Object? object}) {
-    navigationKey.currentState!.pushNamed(screenName, arguments: object);
+    return navigationKey.currentState!.pushNamed(screenName, arguments: object);
   }
 
-  static back() {
-    navigationKey.currentState!.maybePop();
+  static back({dynamic object}) {
+    navigationKey.currentState!.maybePop(object);
   }
 
   static goAndRemoveUntil(

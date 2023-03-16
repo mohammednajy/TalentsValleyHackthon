@@ -6,4 +6,13 @@ class ScreenName {
   static const String addBankAccountScreen = 'add_bank_account_screen';
   static const String otpBankScreen = 'otp_bank_screen';
   static const String bankPreviewScreen = 'withdrawal_preview_screen';
+  static const String cashAmountScreen = 'cash_amount_screen';
+  static const String selectAddRecipientCashScreen =
+      'selectAddRecipientCashScreen';
+  static const String addRecipientScreen = 'addRecipientScreen';
+  static const String otpCashScreen = 'otp_cash_screen';
+  static const String recipientScreen = 'recipientScreen';
+  static const String cashPreviewScreen = 'cashPreviewScreen';
+
+
 }

@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:talents_valley_hackthon/controller/localData/shared_perf.dart';
+import 'package:talents_valley_hackthon/controller/provider/payoutProvider/payout_provider.dart';
 import 'package:talents_valley_hackthon/utils/responsive.dart';
-import 'package:talents_valley_hackthon/view/router/app_router.dart';
-import 'package:talents_valley_hackthon/view/router/router_name.dart';
+
 import 'package:talents_valley_hackthon/view/shared/custom_appbar.dart';
 import 'package:talents_valley_hackthon/view/shared/custom_button_widget.dart';
 import 'package:talents_valley_hackthon/view/shared/custom_rich_text.dart';
 import 'package:talents_valley_hackthon/view/shared/otp_widget.dart';
 
-import '../../../../utils/constant.dart';
+import '../../../../../utils/constant.dart';
 
-class OtpBankScreen extends StatefulWidget {
-  const OtpBankScreen({super.key});
-
+class OtpCashScreen extends StatefulWidget {
+  const OtpCashScreen({
+    required this.recipientInfo,
+    super.key,
+  });
+  final List<dynamic> recipientInfo;
   @override
-  State<OtpBankScreen> createState() => _OtpBankScreenState();
+  State<OtpCashScreen> createState() => _OtpCashScreenState();
 }
 
-class _OtpBankScreenState extends State<OtpBankScreen> {
+class _OtpCashScreenState extends State<OtpCashScreen> {
   TextEditingController firstControllerField = TextEditingController();
   TextEditingController secondControllerField = TextEditingController();
   TextEditingController thirdControllerField = TextEditingController();
@@ -97,18 +102,31 @@ class _OtpBankScreenState extends State<OtpBankScreen> {
                 ),
                 CustomButtonWidget(
                   text: 'Verify',
-                  isLoading: false,
+                  isLoading: context.watch<PayoutProvider>().loading,
                   onPressed: () {
+                    String code = firstControllerField.text +
+                        secondControllerField.text +
+                        thirdControllerField.text +
+                        fourthControllerField.text +
+                        fifthControllerField.text +
+                        sixthControllerField.text;
                     if (formKey.currentState!.validate()) {
-                      // AppRouter.navigationKey.currentState!
-                      //     .pushNamedAndRemoveUntil(
-                      //         ScreenName.selectAddBankScreen,
-                      //         ModalRoute.withName(
-                      //             ScreenName.bankWithdrawAmountScreen));
-
-                      AppRouter.popUntil(
-                        screenName: ScreenName.selectAddBankScreen,
-                      );
+                      widget.recipientInfo[3]
+                          ? context.read<PayoutProvider>().editRecipient(
+                              token:
+                                  SharedPrefController().getUser().accessToken,
+                              code: code,
+                              id: context.read<PayoutProvider>().idSelected,
+                              mobile: widget.recipientInfo[0],
+                              idNumber: widget.recipientInfo[1],
+                              name: widget.recipientInfo[2])
+                          : context.read<PayoutProvider>().addRecipient(
+                              token:
+                                  SharedPrefController().getUser().accessToken,
+                              mobile: widget.recipientInfo[0],
+                              idNumber: widget.recipientInfo[1],
+                              name: widget.recipientInfo[2],
+                              code: code);
                     }
                   },
                 ),

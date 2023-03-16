@@ -30,7 +30,7 @@ class UserInfo {
   final String lastName;
   final String email;
 
-  final int balance;
+  final double balance;
 
   UserInfo({
     required this.id,
@@ -46,7 +46,7 @@ class UserInfo {
       firstName: jsonMap["firstName"],
       lastName: jsonMap["lastName"],
       email: jsonMap["email"],
-      balance: jsonMap["balance"],
+      balance: double.parse(jsonMap["balance"].toString()),
     );
   }
 

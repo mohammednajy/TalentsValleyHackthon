@@ -10,7 +10,7 @@ class Data {
     if (json['withdraws'] != null) {
       withdraws = <Withdraws>[];
       json['withdraws'].forEach((v) {
-        withdraws!.add( Withdraws.fromJson(v));
+        withdraws!.add(Withdraws.fromJson(v));
       });
     }
   }
@@ -30,7 +30,7 @@ class Data {
 
 class Withdraws {
   String? sId;
-  int? amount;
+  double? amount;
   Bank? bank;
   String? typeWithdraw;
   String? status;
@@ -50,15 +50,14 @@ class Withdraws {
 
   Withdraws.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    amount = json['amount'];
-    bank = json['bank'] != null ?  Bank.fromJson(json['bank']) : null;
+    amount = double.parse(json['amount'].toString());
+    bank = json['bank'] != null ? Bank.fromJson(json['bank']) : null;
     typeWithdraw = json['typeWithdraw'];
     status = json['status'];
     createdAt = json['createdAt'];
-    office =
-        json['office'] != null ?  Office.fromJson(json['office']) : null;
+    office = json['office'] != null ? Office.fromJson(json['office']) : null;
     recipient = json['recipient'] != null
-        ?  Recipient.fromJson(json['recipient'])
+        ? Recipient.fromJson(json['recipient'])
         : null;
   }
 

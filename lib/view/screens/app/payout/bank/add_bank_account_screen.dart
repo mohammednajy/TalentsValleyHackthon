@@ -1,14 +1,18 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'package:talents_valley_hackthon/controller/localData/shared_perf.dart';
+import 'package:talents_valley_hackthon/controller/provider/payoutProvider/payout_provider.dart';
 import 'package:talents_valley_hackthon/utils/constant.dart';
 import 'package:talents_valley_hackthon/utils/responsive.dart';
 import 'package:talents_valley_hackthon/view/router/router_name.dart';
 import 'package:talents_valley_hackthon/view/shared/custom_appbar.dart';
 
-import '../../../router/app_router.dart';
-import '../../../shared/custom_bottom_sheet.dart';
-import '../../../shared/custom_button_widget.dart';
-import '../../../../utils/validation.dart';
+import '../../../../../utils/validation.dart';
+import '../../../../router/app_router.dart';
+import '../../../../shared/custom_bottom_sheet.dart';
+import '../../../../shared/custom_button_widget.dart';
 
 class AddBankAccountScreen extends StatefulWidget {
   const AddBankAccountScreen({super.key});
@@ -190,10 +194,19 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
                   ),
                   CustomButtonWidget(
                     text: 'Continue',
-                    isLoading: false,
+                    isLoading: context.watch<PayoutProvider>().loading,
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        AppRouter.goTo(ScreenName.otpBankScreen);
+                        context
+                            .read<PayoutProvider>()
+                            .sendVerificationCodeToAdd(
+                                token: SharedPrefController()
+                                    .getUser()
+                                    .accessToken,
+                                accountName: accountOwnerNameController.text,
+                                accountNumber: accountNumberController.text,
+                                bankBranch: selectedBranch,
+                                ledger: selectedLedger);
                       }
                     },
                   ),

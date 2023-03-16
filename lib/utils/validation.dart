@@ -30,14 +30,31 @@ extension ValidationExt on String {
     try {
       if (isEmpty) {
         result = 'required field';
+      } else if (double.parse(this) == null) {
+        result = "must be double";
+      } else if (double.parse(this) >
+          SharedPrefController().getUser().userInfo.balance) {
+        result = "amount must be less than available balance";
+      }
+    } on Exception catch (e) {
+      result = "must be double";
+    }
+    return result;
+  }
+
+  String? get isValidAmountWithoutCents {
+    String? result;
+    try {
+      if (isEmpty) {
+        result = 'required field';
       } else if (int.parse(this) == null) {
-        result = "must be integer";
+        result = "Sorry, cents can't be withdrawn for cash payout.";
       } else if (int.parse(this) >
           SharedPrefController().getUser().userInfo.balance) {
         result = "amount must be less than available balance";
       }
     } on Exception catch (e) {
-      result = "must be integer";
+      result = "Sorry, cents can't be withdrawn for cash payout.";
     }
     return result;
   }

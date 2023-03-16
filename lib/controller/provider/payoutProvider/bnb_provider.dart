@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:talents_valley_hackthon/controller/provider/authProvider/authprovider.dart';
-import 'package:talents_valley_hackthon/view/screens/app/payout/payout_screen.dart';
 import 'package:talents_valley_hackthon/view/shared/custom_button_widget.dart';
 
 import '../../../utils/constant.dart';
+import '../../../view/screens/app/payout/bank/payout_screen.dart';
 
 class BNBProvider extends ChangeNotifier {
   int selectPage = 0;
