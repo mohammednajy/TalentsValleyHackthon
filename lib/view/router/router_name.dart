@@ -14,5 +14,15 @@ class ScreenName {
   static const String recipientScreen = 'recipientScreen';
   static const String cashPreviewScreen = 'cashPreviewScreen';
 
+  static const String invoicePreviewScreen = 'invoicePreviewScreen';
+  static const String previewLinkScreen = 'previewLinkScreen';
+  static const String pendingInvoiceScreen = 'pendingInvoiceScreen';
+  static const String canceledInvoiceScreen = 'canceledInvoiceScreen';
+  static const String disapprovedInvoiceScreen = 'disapprovedInvoiceScreen';
+  static const String pendingLinkScreen = 'pendingLinkScreen';
+  static const String disapprovedLinkScreen = 'disapprovedLinkScreen';
+  static const String sentInvoiceScreen = 'sentInvoiceScreen';
+  static const String inactiveLinkScreen = 'inactiveLinkScreen';
+  static const String activeLinkScreen = 'activeLinkScreen';
 
 }

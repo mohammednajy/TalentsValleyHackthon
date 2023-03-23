@@ -135,7 +135,7 @@ class _SelectAddBankScreenState extends State<SelectAddBankScreen> {
                   });
                 },
                 style: ElevatedButton.styleFrom(
-                    primary: Colors.white,
+                    backgroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(7),
                       side: const BorderSide(
