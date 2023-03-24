@@ -1,8 +1,6 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
 import 'package:talents_valley_hackthon/controller/localData/shared_perf.dart';
 
 extension ValidationExt on String {

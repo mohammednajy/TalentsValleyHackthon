@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:talents_valley_hackthon/controller/models/recipient_model.dart';
 import 'package:talents_valley_hackthon/controller/provider/payoutProvider/payout_provider.dart';
 import 'package:talents_valley_hackthon/view/router/router_name.dart';
+import 'package:talents_valley_hackthon/view/screens/app/invoice/invoice/create_invoice_screen.dart';
 import 'package:talents_valley_hackthon/view/screens/app/payout/bank/add_bank_account_screen.dart';
 import 'package:talents_valley_hackthon/view/screens/app/payout/bank/bank_perview_screen.dart';
 import 'package:talents_valley_hackthon/view/screens/app/payout/bank/bank_withdrow_amount_screen.dart';
@@ -15,14 +16,14 @@ import 'package:talents_valley_hackthon/view/screens/app/payout/cash/otp_mobile_
 import 'package:talents_valley_hackthon/view/screens/app/payout/cash/recipient_screen.dart';
 import 'package:talents_valley_hackthon/view/screens/app/payout/cash/select_add_recipient_cash_screen.dart';
 
-import '../screens/app/home_screen.dart';
+import '../screens/app/home_app_screen.dart';
 
 Route onGenerateRoute(RouteSettings settings) {
   dynamic result;
   switch (settings.name) {
     case ScreenName.homeScreen:
       return MaterialPageRoute(
-        builder: (context) => const HomeScreen(),
+        builder: (context) => const HomeAppScreen(),
         settings: const RouteSettings(
           name: ScreenName.homeScreen,
         ),
@@ -120,6 +121,13 @@ Route onGenerateRoute(RouteSettings settings) {
               CashPreviewScreen(data: settings.arguments as List<String>),
           settings: const RouteSettings(
             name: ScreenName.cashPreviewScreen,
+          ));
+
+    case ScreenName.createInvoiceScreen:
+      return MaterialPageRoute(
+          builder: (context) => const CreateInvoiceScreen(),
+          settings: const RouteSettings(
+            name: ScreenName.createInvoiceScreen,
           ));
     default:
       return MaterialPageRoute(

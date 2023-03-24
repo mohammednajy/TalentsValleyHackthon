@@ -280,16 +280,20 @@ class FixedFieldWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 15,
-            color: AppColor.subtitleColor,
-          ),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
+        label == ''
+            ? const SizedBox()
+            : Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 15,
+                  color: AppColor.subtitleColor,
+                ),
+              ),
+        label == ''
+            ? const SizedBox()
+            : const SizedBox(
+                height: 5,
+              ),
         Container(
           height: 55,
           width: double.infinity,
@@ -307,10 +311,17 @@ class FixedFieldWidget extends StatelessWidget {
                 Expanded(
                   child: Text(
                     content,
-                    style: TextStyle(
-                        color: contentColor,
-                        fontSize: 16,
-                        overflow: TextOverflow.ellipsis),
+                    style: content == 'Country' || content == 'USD'
+                        ? const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16,
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        : TextStyle(
+                            color: contentColor,
+                            fontSize: 16,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                   ),
                 ),
                 // ignore: prefer_const_constructors
@@ -333,11 +344,15 @@ class CustomTextFieldWidget extends StatelessWidget {
     Key? key,
     required this.label,
     this.controller,
+    this.hintText,
     this.validator,
+    this.suffixIcon,
   }) : super(key: key);
   final String label;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
+  final String? hintText;
+  final Widget? suffixIcon;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -362,6 +377,8 @@ class CustomTextFieldWidget extends StatelessWidget {
               horizontal: 17,
               vertical: 16,
             ),
+            suffixIcon: suffixIcon,
+            hintText: hintText,
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(7),
                 borderSide: const BorderSide(

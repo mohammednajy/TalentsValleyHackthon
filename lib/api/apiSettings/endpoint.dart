@@ -1,6 +1,8 @@
 class EndPoints {
   static const String baseUrl =
       "https://talents-valley-backend.herokuapp.com/api";
+
+  //payout endpoint
   static const String login = '$baseUrl/user/login';
   static const String withdrawList = '$baseUrl/withdraw/list';
   static const String bankAccountList = '$baseUrl/bank/listing';
@@ -20,6 +22,9 @@ class EndPoints {
   static const String officeList = '$baseUrl/withdraw/office-list';
   static const String requestCashWithdrawal = '$baseUrl/withdraw/request-cash';
 
+// invoice and link endpoint
+  static const String invoiceList = '$baseUrl/invoice/listing';
+  static const String linkList = '$baseUrl/service/listing';
 
   static const int receiveTimeout = 35000;
   static const int connectTimeout = 35000;

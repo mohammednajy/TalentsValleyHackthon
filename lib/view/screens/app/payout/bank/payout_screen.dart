@@ -57,91 +57,98 @@ class _PayoutScreenState extends State<PayoutScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Current Balance',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium!
-                                .copyWith(
-                                  color: AppColor.subtitleColor,
-                                ),
-                          ),
-                          const SizedBox(
-                            height: 7,
-                          ),
-                          Text(
-                            '\$ ${SharedPrefController().getUser().userInfo.balance}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge!
-                                .copyWith(
-                                  color: Colors.black,
-                                ),
-                          )
-                        ],
-                      ),
-                      ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
-                            fixedSize: const Size(140, 34),
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(7),
-                                side: const BorderSide(
-                                  color: AppColor.borderColor,
-                                ))),
-                        onPressed: () {
-                          showModalBottomSheet<void>(
-                            shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(25),
-                              topRight: Radius.circular(25),
-                            )),
-                            context: context,
-                            builder: (BuildContext context) {
-                              return CustomBottomSheet(
-                                  height: 190,
-                                  title: 'Choose Payment Method',
-                                  titleColor: Colors.black54,
-                                  closable: true,
-                                  options: [
-                                    PaymentMethodTile(
-                                      iconPath: AssetPath.bankIcon,
-                                      paymentMethod: 'Bank',
-                                      onTap: () {
-                                        AppRouter.goTo(ScreenName
-                                            .bankWithdrawAmountScreen);
-                                      },
-                                    ),
-                                    PaymentMethodTile(
-                                      iconPath: AssetPath.cashIcon,
-                                      paymentMethod: 'cash',
-                                      onTap: () {
-                                        context
-                                            .read<PayoutProvider>()
-                                            .getOfficeList(
-                                                token: SharedPrefController()
-                                                    .getUser()
-                                                    .accessToken);
-                                        AppRouter.goTo(
-                                            ScreenName.cashAmountScreen);
-                                      },
-                                    ),
-                                  ]);
-                            },
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.file_download_outlined,
-                          color: Colors.blue,
+                      Expanded(
+                        flex: 5,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Current Balance',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(
+                                    color: AppColor.subtitleColor,
+                                  ),
+                            ),
+                            const SizedBox(
+                              height: 7,
+                            ),
+                            Text(
+                              '\$ ${SharedPrefController().getUser().userInfo.balance}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge!
+                                  .copyWith(
+                                    color: Colors.black,
+                                  ),
+                              overflow: TextOverflow.ellipsis,
+                            )
+                          ],
                         ),
-                        label: const Text(
-                          'Withdraw',
-                          style: TextStyle(
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.white,
+                              fixedSize: const Size(140, 34),
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(7),
+                                  side: const BorderSide(
+                                    color: AppColor.borderColor,
+                                  ))),
+                          onPressed: () {
+                            showModalBottomSheet<void>(
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(25),
+                                topRight: Radius.circular(25),
+                              )),
+                              context: context,
+                              builder: (BuildContext context) {
+                                return CustomBottomSheet(
+                                    height: 190,
+                                    title: 'Choose Payment Method',
+                                    titleColor: Colors.black54,
+                                    closable: true,
+                                    options: [
+                                      PaymentMethodTile(
+                                        iconPath: AssetPath.bankIcon,
+                                        paymentMethod: 'Bank',
+                                        onTap: () {
+                                          AppRouter.goTo(ScreenName
+                                              .bankWithdrawAmountScreen);
+                                        },
+                                      ),
+                                      PaymentMethodTile(
+                                        iconPath: AssetPath.cashIcon,
+                                        paymentMethod: 'cash',
+                                        onTap: () {
+                                          context
+                                              .read<PayoutProvider>()
+                                              .getOfficeList(
+                                                  token: SharedPrefController()
+                                                      .getUser()
+                                                      .accessToken);
+                                          AppRouter.goTo(
+                                              ScreenName.cashAmountScreen);
+                                        },
+                                      ),
+                                    ]);
+                              },
+                            );
+                          },
+                          icon: const Icon(
+                            Icons.file_download_outlined,
                             color: Colors.blue,
+                          ),
+                          label: const Text(
+                            'Withdraw',
+                            style: TextStyle(
+                              color: Colors.blue,
+                            ),
                           ),
                         ),
                       )
@@ -290,7 +297,7 @@ class _PayoutScreenState extends State<PayoutScreen> {
 SkeletonLoader SkeletonLoaderWidget() {
   return SkeletonLoader(
     builder: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 21, vertical: 10),
       child: Row(
         children: <Widget>[
           Expanded(
@@ -313,7 +320,7 @@ SkeletonLoader SkeletonLoaderWidget() {
         ],
       ),
     ),
-    items: 8,
+    items: 2,
     period: const Duration(seconds: 2),
     highlightColor: Colors.white,
     direction: SkeletonDirection.ltr,

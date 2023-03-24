@@ -57,11 +57,14 @@ class CustomBottomSheet extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 10),
             child: Divider(
               thickness: 2,
+              height: 5,
             ),
           ),
-          Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [...options])
+          Expanded(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [...options]),
+          )
         ],
       ),
     );

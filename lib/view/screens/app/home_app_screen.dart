@@ -6,8 +6,8 @@ import '../../../controller/provider/payoutProvider/bnb_provider.dart';
 import '../../../controller/provider/payoutProvider/payout_provider.dart';
 import '../../../utils/responsive.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class HomeAppScreen extends StatelessWidget {
+  const HomeAppScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

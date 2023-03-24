@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:talents_valley_hackthon/controller/provider/authProvider/authprovider.dart';
+import 'package:talents_valley_hackthon/controller/provider/invoiceProvider/invoice_provider.dart';
 import 'package:talents_valley_hackthon/controller/provider/payoutProvider/payout_provider.dart';
 import 'package:talents_valley_hackthon/utils/helper.dart';
 import 'package:talents_valley_hackthon/utils/theme.dart';
@@ -15,20 +16,25 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPrefController().init();
 
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(
-        create: (context) => BNBProvider(),
-      ),
-         ChangeNotifierProvider(
-        create: (context) => PayoutProvider(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => AuthProvider(),
-      ),
-    ],
-    child: const TalentsValleyApp(),
-  ));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => BNBProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => PayoutProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AuthProvider(),
+        ),
+          ChangeNotifierProvider(
+          create: (context) => InvoiceProvider(),
+        ),
+      ],
+      child: const TalentsValleyApp(),
+    ),
+  );
 }
 
 class TalentsValleyApp extends StatelessWidget {

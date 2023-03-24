@@ -13,6 +13,8 @@ class ScreenName {
   static const String otpCashScreen = 'otp_cash_screen';
   static const String recipientScreen = 'recipientScreen';
   static const String cashPreviewScreen = 'cashPreviewScreen';
+  static const String createInvoiceScreen = 'createInvoiceScreen';
+
 
 
 }

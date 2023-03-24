@@ -11,6 +11,10 @@ class AssetPath {
   static const String bankIcon = '${baseIconPath}bank_icon.png';
   static const String logoIcon = '${baseIconPath}logo_icon.png';
   static const String phoneIcon = '${baseIconPath}phone_icon.png';
+  static const String sendIcon = '${baseIconPath}send_icon.png';
+
+
+  
 }
 
 class AppColor {
@@ -18,3 +22,4 @@ class AppColor {
   static const Color subtitleColor = Color(0xFF505050);
   static const Color borderColor = Color(0xFFE2E2E2);
 }
+
