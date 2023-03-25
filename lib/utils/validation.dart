@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:talents_valley_hackthon/controller/localData/shared_perf.dart';
@@ -33,6 +32,20 @@ extension ValidationExt on String {
       } else if (double.parse(this) >
           SharedPrefController().getUser().userInfo.balance) {
         result = "amount must be less than available balance";
+      }
+    } on Exception catch (e) {
+      result = "must be double";
+    }
+    return result;
+  }
+
+  String? get isValidAmountForInvoice {
+    String? result;
+    try {
+      if (isEmpty) {
+        result = 'required field';
+      } else if (double.parse(this) == null) {
+        result = "must be double";
       }
     } on Exception catch (e) {
       result = "must be double";

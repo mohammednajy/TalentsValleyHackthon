@@ -74,7 +74,7 @@ class _SelectAddRecipientCashScreenState
                                 closable: true,
                                 options: [
                               providerValue.office.isEmpty
-                                  ? Text('there is no office ')
+                                  ? const Text('there is no office ')
                                   : ListView.separated(
                                       shrinkWrap: true,
                                       physics:
@@ -309,7 +309,7 @@ class _SelectAddRecipientCashScreenState
                                           ),
                                           itemCount: 3,
                                           separatorBuilder: (context, index) =>
-                                              Divider(
+                                              const Divider(
                                             thickness: 1.5,
                                             height: 25,
                                           ),
@@ -343,7 +343,7 @@ class _SelectAddRecipientCashScreenState
                                               fontWeight: FontWeight.bold,
                                               fontSize: 16),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 10,
                                         ),
                                         Text(
@@ -427,7 +427,7 @@ class _SelectAddRecipientCashScreenState
                         ),
                       ],
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
               CustomButtonWidget(
                 text: 'Continue',
                 isLoading: false,

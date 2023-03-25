@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:talents_valley_hackthon/controller/models/create_invoice_model.dart';
 import 'package:talents_valley_hackthon/utils/constant.dart';
 import 'package:talents_valley_hackthon/utils/validation.dart';
 import 'package:talents_valley_hackthon/view/router/app_router.dart';
+import 'package:talents_valley_hackthon/view/router/router_name.dart';
 import 'package:talents_valley_hackthon/view/screens/app/payout/bank/add_bank_account_screen.dart';
 import 'package:talents_valley_hackthon/view/shared/custom_appbar.dart';
 import 'package:talents_valley_hackthon/view/shared/custom_button_widget.dart';
@@ -25,7 +29,7 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
   TextEditingController jobDetailsController = TextEditingController();
   TextEditingController amountController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  GlobalKey<FormState> formKey = GlobalKey();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String? selectedCountry;
   String? selectedCurrency;
   int lastServiceIndex = -1;
@@ -37,12 +41,12 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
         title: 'Create Invoice',
         backButton: true,
       ),
-      body: GestureDetector(
-        onTap: () {
-          FocusManager.instance.primaryFocus?.unfocus();
-        },
-        child: Form(
-          key: formKey,
+      body: Form(
+        key: formKey,
+        child: GestureDetector(
+          onTap: () {
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
           child: ListView(
               padding: const EdgeInsets.only(right: 21, left: 21, bottom: 20),
               children: [
@@ -225,7 +229,9 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
                         alignment: Alignment.topRight,
                         onPressed: () {
                           setState(() {
-                            lastServiceIndex--;
+                            // removedItemIndex.add(index);
+                            --lastServiceIndex;
+                            controllersIndex.remove(index);
                             servicesWidgetList.removeAt(index);
                             servicesControllers.removeAt(index);
                           });
@@ -246,7 +252,8 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
                 ElevatedButton.icon(
                   onPressed: () {
                     setState(() {
-                      lastServiceIndex++;
+                      controllersIndex.add(++lastServiceIndex);
+                      // lastServiceIndex++;
                       servicesControllers.add({
                         "job_details$lastServiceIndex": TextEditingController(),
                         "amount$lastServiceIndex": TextEditingController(),
@@ -293,7 +300,22 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
                   isLoading: false,
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                  //TODO: send the object to the pervie screen
+                      Map<String, dynamic> map = {
+                        "client": {
+                          "fullName":
+                              '${firstNameController.text} ${lastNameController.text}',
+                          "email": emailController.text,
+                          "address": {
+                            "country": selectedCountry,
+                          }
+                        },
+                        "fixed": addListOfServices(),
+                        "currency": selectedCurrency
+                      };
+                      AppRouter.goTo(
+                        ScreenName.invoicePreviewScreen,
+                        object: CreateInvoiceModel.fromJson(map),
+                      );
                     }
                   },
                 )
@@ -312,8 +334,33 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
     "QAR",
     "JOD",
   ];
+  addListOfServices() {
+    List<Map<String, dynamic>> data = [
+      {
+        "itemName": jobDetailsController.text,
+        "description": descriptionController.text,
+        "price": amountController.text
+      },
+    ];
+
+    if (servicesWidgetList.isNotEmpty) {
+      for (int i = 0; i < controllersIndex.length; ++i) {
+        data.add({
+          "itemName":
+              servicesControllers[i]["job_details${controllersIndex[i]}"]!.text,
+          "description":
+              servicesControllers[i]["description${controllersIndex[i]}"]!.text,
+          "price": servicesControllers[i]["amount${controllersIndex[i]}"]!.text
+        });
+      }
+    }
+
+    return data;
+  }
 
   List<Widget> servicesWidgetList = [];
+  List<int> controllersIndex = [];
+
   List<Map<String, TextEditingController>> servicesControllers = [];
   // Map<String, TextEditingController> singleServiceItem = {
   //   "job_details": TextEditingController(),
@@ -350,14 +397,14 @@ class ServiceCustomWidget extends StatelessWidget {
                 label: 'Job Details',
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Expanded(
               child: CustomTextFieldWidget(
                 controller: amountController,
                 validator: (value) {
-                  return value!.isValidAmount;
+                  return value!.isValidAmountForInvoice;
                 },
                 hintText: '0.00',
                 label: 'Amount',

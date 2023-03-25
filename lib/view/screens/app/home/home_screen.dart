@@ -81,7 +81,9 @@ class HomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        AppRouter.goTo(ScreenName.createLinkScreen);
+                      },
                       style: ElevatedButton.styleFrom(
                         primary: const Color.fromARGB(255, 227, 242, 255),
                       ),
@@ -100,7 +102,11 @@ class HomeScreen extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         primary: const Color.fromARGB(255, 227, 242, 255),
                       ),
-                      icon: Image.asset(AssetPath.sendIcon, height: 18),
+                      icon: Image.asset(
+                        AssetPath.sentIcon,
+                        height: 18,
+                        color: Colors.blue,
+                      ),
                       label: const Text(
                         'Send Invoice',
                         style: TextStyle(color: Colors.blue),

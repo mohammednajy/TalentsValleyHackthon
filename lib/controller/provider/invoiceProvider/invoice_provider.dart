@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:talents_valley_hackthon/api/invoiceApi/invoiceApi.dart';
 import 'package:talents_valley_hackthon/controller/models/invoice_model.dart';
 import 'package:talents_valley_hackthon/controller/models/link_model.dart';
+import 'package:talents_valley_hackthon/view/router/app_router.dart';
+import 'package:talents_valley_hackthon/view/router/router_name.dart';
 
 import '../../../api/apiSettings/app_exception.dart';
 import '../../../utils/helper.dart';
@@ -63,7 +65,7 @@ class InvoiceProvider extends ChangeNotifier {
 
   getLinkList({
     required String token,
-    String? filter ,
+    String? filter,
     String? search,
     int limit = 10,
     int offset = 0,
@@ -96,6 +98,44 @@ class InvoiceProvider extends ChangeNotifier {
             .toList();
         notifyListeners();
         print(links.length);
+      }
+      setLoading(false);
+    } on DioError catch (e) {
+      setLoading(false);
+      final errorMessage = DioExceptions.fromDioError(e);
+      UtilsConfig.showSnackBarMessage(message: errorMessage, status: false);
+    }
+  }
+
+  createInvoice({required String token, required dynamic data}) async {
+    setLoading(true);
+    try {
+      final response = await InvoiceApi.createInvoice(token: token, data: data);
+      if (response.statusCode == 200) {
+        UtilsConfig.showSnackBarMessage(
+          message: 'invoice send successfully',
+          status: true,
+        );
+        AppRouter.popUntil(screenName: ScreenName.homeScreen);
+      }
+      setLoading(false);
+    } on DioError catch (e) {
+      setLoading(false);
+      final errorMessage = DioExceptions.fromDioError(e);
+      UtilsConfig.showSnackBarMessage(message: errorMessage, status: false);
+    }
+  }
+
+  createLink({required String token, required dynamic data}) async {
+    setLoading(true);
+    try {
+      final response = await InvoiceApi.createLink(token: token, data: data);
+      if (response.statusCode == 201) {
+        UtilsConfig.showSnackBarMessage(
+          message: 'link send successfully',
+          status: true,
+        );
+        AppRouter.popUntil(screenName: ScreenName.homeScreen);
       }
       setLoading(false);
     } on DioError catch (e) {

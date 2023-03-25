@@ -16,7 +16,7 @@ class InvoiceApi {
     );
   }
 
-    static Future<Response> getLinkList({
+  static Future<Response> getLinkList({
     required String token,
     required Map<String, dynamic>? queryParameters,
   }) async {
@@ -26,6 +26,32 @@ class InvoiceApi {
         "Authorization": "Bearer $token",
       }),
       queryParameters: queryParameters,
+    );
+  }
+
+  static Future<Response> createInvoice({
+    required String token,
+    required dynamic data,
+  }) async {
+    return await BaseClient().post(
+      EndPoints.createInvoice,
+      options: Options(headers: {
+        "Authorization": "Bearer $token",
+      }),
+      data: data,
+    );
+  }
+
+  static Future<Response> createLink({
+    required String token,
+    required dynamic data,
+  }) async {
+    return await BaseClient().post(
+      EndPoints.createLink,
+      options: Options(headers: {
+        "Authorization": "Bearer $token",
+      }),
+      data: data,
     );
   }
 }
