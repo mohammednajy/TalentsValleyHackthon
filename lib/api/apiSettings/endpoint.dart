@@ -27,6 +27,8 @@ class EndPoints {
   static const String linkList = '$baseUrl/service/listing';
   static const String createInvoice = '$baseUrl/invoice/create';
   static const String createLink = '$baseUrl/service/create';
+  static const String editInvoice = '$baseUrl/invoice/edit/';
+
 
   static const int receiveTimeout = 35000;
   static const int connectTimeout = 35000;

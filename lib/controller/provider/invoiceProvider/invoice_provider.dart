@@ -1,8 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:talents_valley_hackthon/api/invoiceApi/invoiceApi.dart';
+import 'package:talents_valley_hackthon/controller/localData/shared_perf.dart';
 import 'package:talents_valley_hackthon/controller/models/invoice_model.dart';
 import 'package:talents_valley_hackthon/controller/models/link_model.dart';
+import 'package:talents_valley_hackthon/controller/provider/payoutProvider/bnb_provider.dart';
 import 'package:talents_valley_hackthon/view/router/app_router.dart';
 import 'package:talents_valley_hackthon/view/router/router_name.dart';
 
@@ -116,6 +119,9 @@ class InvoiceProvider extends ChangeNotifier {
           message: 'invoice send successfully',
           status: true,
         );
+        Provider.of<BNBProvider>(AppRouter.navigationKey.currentContext!,
+                listen: false)
+            .setSelectedPage(1);
         AppRouter.popUntil(screenName: ScreenName.homeScreen);
       }
       setLoading(false);
@@ -135,6 +141,29 @@ class InvoiceProvider extends ChangeNotifier {
           message: 'link send successfully',
           status: true,
         );
+        AppRouter.popUntil(screenName: ScreenName.homeScreen);
+      }
+      setLoading(false);
+    } on DioError catch (e) {
+      setLoading(false);
+      final errorMessage = DioExceptions.fromDioError(e);
+      UtilsConfig.showSnackBarMessage(message: errorMessage, status: false);
+    }
+  }
+
+  editInvoice({required String id, required dynamic data}) async {
+    setLoading(true);
+    try {
+      final response = await InvoiceApi.editInvoice(id: id, data: data);
+      if (response.statusCode == 200) {
+        getInvoicesList(token: SharedPrefController().getUser().accessToken);
+        UtilsConfig.showSnackBarMessage(
+          message: 'invoice edited successfully',
+          status: true,
+        );
+        Provider.of<BNBProvider>(AppRouter.navigationKey.currentContext!,
+                listen: false)
+            .setSelectedPage(1);
         AppRouter.popUntil(screenName: ScreenName.homeScreen);
       }
       setLoading(false);

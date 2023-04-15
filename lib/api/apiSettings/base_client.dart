@@ -11,12 +11,19 @@ class BaseClient {
     return _instanse;
   }
 
-  final dio = Dio(BaseOptions(
-    connectTimeout: EndPoints.connectTimeout,
-    baseUrl: EndPoints.baseUrl,
-    receiveDataWhenStatusError: true,
-    receiveTimeout: EndPoints.receiveTimeout,
-  ));
+  final _dio = Dio(BaseOptions(
+      connectTimeout: EndPoints.connectTimeout,
+      baseUrl: EndPoints.baseUrl,
+      receiveDataWhenStatusError: true,
+      receiveTimeout: EndPoints.receiveTimeout,
+      //TODO: pass token here
+      validateStatus: (value) {
+        if (value != null && value < 503) {
+          return true;
+        }
+        return false;
+      }));
+
   Future<Response> get(
     String path, {
     Map<String, dynamic>? queryParameters,
@@ -24,7 +31,7 @@ class BaseClient {
     CancelToken? cancelToken,
     void Function(int, int)? onReceiveProgress,
   }) async {
-    return await dio.get(
+    return await _dio.get(
       path,
       cancelToken: cancelToken,
       queryParameters: queryParameters,
@@ -43,7 +50,7 @@ class BaseClient {
     void Function(int, int)? onReceiveProgress,
   }) async {
     try {
-      return await dio.post(
+      return await _dio.post(
         path,
         data: data,
         queryParameters: queryParameters,
@@ -64,7 +71,7 @@ class BaseClient {
     Options? options,
   }) async {
     try {
-      return await dio.delete(path,
+      return await _dio.delete(path,
           data: data, queryParameters: queryParameters, options: options);
     } catch (e) {
       rethrow;
@@ -77,7 +84,7 @@ class BaseClient {
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) async {
-    return await dio.put(
+    return await _dio.put(
       path,
       data: data,
       queryParameters: queryParameters,

@@ -10,6 +10,7 @@ import 'package:talents_valley_hackthon/view/shared/custom_appbar.dart';
 import 'package:talents_valley_hackthon/view/shared/custom_button_widget.dart';
 
 import '../../../../../api/apiSettings/app_exception.dart';
+import '../../../../../controller/provider/payoutProvider/bnb_provider.dart';
 import '../../../../../utils/helper.dart';
 import '../componat/perview_card_widget.dart';
 
@@ -146,6 +147,7 @@ class _CashPreviewScreenState extends State<CashPreviewScreen> {
                 text: 'Confirm',
                 isLoading: context.watch<PayoutProvider>().loading,
                 onPressed: () {
+                  context.read<BNBProvider>().setSelectedPage(2);
                   context.read<PayoutProvider>().requestCashWithdrawal(
                       token: SharedPrefController().getUser().accessToken,
                       officeId: widget.data[1],

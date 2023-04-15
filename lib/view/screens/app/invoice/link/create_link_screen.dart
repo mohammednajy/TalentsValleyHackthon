@@ -22,7 +22,7 @@ class _CreateLinkScreenState extends State<CreateLinkScreen> {
   TextEditingController amountController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   String? selectedCurrency;
-  int lastServiceIndex = -1;
+  // int lastServiceIndex = -1;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -126,11 +126,8 @@ class _CreateLinkScreenState extends State<CreateLinkScreen> {
                       alignment: Alignment.topRight,
                       onPressed: () {
                         setState(() {
-                          // removedItemIndex.add(index);
-                          --lastServiceIndex;
-                          controllersIndex.remove(index);
                           servicesWidgetList.removeAt(index);
-                          servicesControllers.removeAt(index);
+                          serviceControllers.removeAt(index);
                         });
                       },
                       icon: const Icon(
@@ -149,23 +146,22 @@ class _CreateLinkScreenState extends State<CreateLinkScreen> {
               ElevatedButton.icon(
                 onPressed: () {
                   setState(() {
-                    controllersIndex.add(++lastServiceIndex);
-                    // lastServiceIndex++;
-                    servicesControllers.add({
-                      "job_details$lastServiceIndex": TextEditingController(),
-                      "amount$lastServiceIndex": TextEditingController(),
-                      "description$lastServiceIndex": TextEditingController(),
-                    });
+                    serviceControllers.add(
+                      ServiceControllerObject(
+                        jobDetailsController: TextEditingController(),
+                        amountController: TextEditingController(),
+                        descriptionController: TextEditingController(),
+                      ),
+                    );
+
                     servicesWidgetList.add(
                       ServiceCustomWidget(
-                        jobDetailsController:
-                            servicesControllers[lastServiceIndex]
-                                ["job_details$lastServiceIndex"]!,
-                        amountController: servicesControllers[lastServiceIndex]
-                            ["amount$lastServiceIndex"]!,
+                        amountController:
+                            serviceControllers.last.amountController,
                         descriptionController:
-                            servicesControllers[lastServiceIndex]
-                                ["description$lastServiceIndex"]!,
+                            serviceControllers.last.descriptionController,
+                        jobDetailsController:
+                            serviceControllers.last.jobDetailsController,
                       ),
                     );
                   });
@@ -197,7 +193,7 @@ class _CreateLinkScreenState extends State<CreateLinkScreen> {
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     Map<String, dynamic> map = {
-                      "fixed": addListOfServices(),
+                      "fixed": servicesMap(),
                       "currency": selectedCurrency
                     };
                     AppRouter.goTo(
@@ -214,7 +210,7 @@ class _CreateLinkScreenState extends State<CreateLinkScreen> {
     );
   }
 
-  addListOfServices() {
+  servicesMap() {
     List<Map<String, dynamic>> data = [
       {
         "itemName": jobDetailsController.text,
@@ -223,14 +219,12 @@ class _CreateLinkScreenState extends State<CreateLinkScreen> {
       },
     ];
 
-    if (servicesWidgetList.isNotEmpty) {
-      for (int i = 0; i < controllersIndex.length; ++i) {
+    if (serviceControllers.isNotEmpty) {
+      for (int i = 0; i < serviceControllers.length; ++i) {
         data.add({
-          "itemName":
-              servicesControllers[i]["job_details${controllersIndex[i]}"]!.text,
-          "description":
-              servicesControllers[i]["description${controllersIndex[i]}"]!.text,
-          "price": servicesControllers[i]["amount${controllersIndex[i]}"]!.text
+          "itemName": serviceControllers[i].jobDetailsController.text,
+          "description": serviceControllers[i].descriptionController.text,
+          "price": serviceControllers[i].amountController.text,
         });
       }
     }
@@ -239,9 +233,7 @@ class _CreateLinkScreenState extends State<CreateLinkScreen> {
   }
 
   List<Widget> servicesWidgetList = [];
-  List<int> controllersIndex = [];
-
-  List<Map<String, TextEditingController>> servicesControllers = [];
+  List<ServiceControllerObject> serviceControllers = [];
 
   List<String> currencyList = [
     "USD",

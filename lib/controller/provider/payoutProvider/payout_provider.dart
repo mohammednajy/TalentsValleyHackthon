@@ -73,7 +73,6 @@ class PayoutProvider extends ChangeNotifier {
       final response = await PayoutApi.getBankList(token: token);
       if (response.statusCode == 200) {
         List<dynamic> jsonList = response.data["data"]["banks"];
-
         banks = jsonList.map((value) => BankModel.fromJson(value)).toList();
         notifyListeners();
       }
@@ -179,7 +178,7 @@ class PayoutProvider extends ChangeNotifier {
           token: token, bankId: bankId, amount: amount);
       if (response.statusCode == 200) {
         getWithdrawalList(token: token);
-        AppRouter.goAndRemove(ScreenName.payoutScreen);
+        AppRouter.popUntil(screenName: ScreenName.homeScreen);
         UtilsConfig.showSnackBarMessage(
           message: "Bank Withdrawal successfully",
           status: true,
@@ -391,11 +390,12 @@ class PayoutProvider extends ChangeNotifier {
           recipientId: recipientId,
           amount: amount);
       if (response.statusCode == 200) {
+        getWithdrawalList(token: token);
         UtilsConfig.showSnackBarMessage(
           message: "Cash Withdrawal successfully",
           status: true,
         );
-        AppRouter.goAndRemove(ScreenName.payoutScreen);
+        AppRouter.popUntil(screenName: ScreenName.homeScreen);
       }
       setLoading(false);
     } on DioError catch (e) {

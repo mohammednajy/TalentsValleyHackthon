@@ -10,7 +10,7 @@ class AppRouter {
         .pushNamedAndRemoveUntil(screenName, (route) => false);
   }
 
-  static goTo(String screenName, {Object? object}) {
+  static  goTo(String screenName, {Object? object}) {
     return navigationKey.currentState!.pushNamed(screenName, arguments: object);
   }
 

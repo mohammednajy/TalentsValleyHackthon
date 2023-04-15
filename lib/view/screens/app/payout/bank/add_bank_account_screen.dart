@@ -311,7 +311,7 @@ class FixedFieldWidget extends StatelessWidget {
                 Expanded(
                   child: Text(
                     content,
-                    style: content == 'Country' || content == 'USD'
+                    style: content == 'Country'
                         ? const TextStyle(
                             color: Colors.grey,
                             fontSize: 16,
@@ -345,7 +345,8 @@ class CustomTextFieldWidget extends StatelessWidget {
     required this.label,
     this.controller,
     this.hintText,
-    this.validator, this.suffixIcon,
+    this.validator,
+    this.suffixIcon,
   }) : super(key: key);
   final String label;
   final TextEditingController? controller;

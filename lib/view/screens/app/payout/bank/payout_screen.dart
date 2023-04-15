@@ -75,12 +75,13 @@ class _PayoutScreenState extends State<PayoutScreen> {
                               height: 7,
                             ),
                             Text(
-                              '\$ ${SharedPrefController().getUser().userInfo.balance}',
+                              '\$ ${SharedPrefController().getUser().userInfo.balance.toStringAsFixed(2)}',
                               style: Theme.of(context)
                                   .textTheme
                                   .titleLarge!
                                   .copyWith(
                                     color: Colors.black,
+                                    fontSize: 16,
                                   ),
                               overflow: TextOverflow.ellipsis,
                             )

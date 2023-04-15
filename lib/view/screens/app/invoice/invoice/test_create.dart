@@ -3,10 +3,8 @@ import 'dart:async';
 
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'package:talents_valley_hackthon/controller/models/create_invoice_model.dart';
-import 'package:talents_valley_hackthon/controller/provider/invoiceProvider/invoice_provider.dart';
 import 'package:talents_valley_hackthon/utils/constant.dart';
 import 'package:talents_valley_hackthon/utils/validation.dart';
 import 'package:talents_valley_hackthon/view/router/app_router.dart';
@@ -15,106 +13,35 @@ import 'package:talents_valley_hackthon/view/screens/app/payout/bank/add_bank_ac
 import 'package:talents_valley_hackthon/view/shared/custom_appbar.dart';
 import 'package:talents_valley_hackthon/view/shared/custom_button_widget.dart';
 
-import '../../../../../controller/models/invoice_model.dart';
 import '../../../../../utils/responsive.dart';
 import '../../../../shared/custom_bottom_sheet.dart';
 
-class CreateInvoiceScreen extends StatefulWidget {
-  const CreateInvoiceScreen({
-    super.key,
-    required this.invoiceModel,
-  });
-  final InvoiceModel? invoiceModel;
+class CreateInvoiceScreenTest extends StatefulWidget {
+  const CreateInvoiceScreenTest({super.key});
+
   @override
-  State<CreateInvoiceScreen> createState() => _CreateInvoiceScreenState();
+  State<CreateInvoiceScreenTest> createState() =>
+      _CreateInvoiceScreenTestState();
 }
 
-class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
-  List<Widget> servicesWidgetList = [];
-  List<ServiceControllerObject> serviceControllers = [];
+class _CreateInvoiceScreenTestState extends State<CreateInvoiceScreenTest> {
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
 
-  late TextEditingController firstNameController;
-  late TextEditingController lastNameController;
-  late TextEditingController emailController;
-
-  late TextEditingController jobDetailsController;
-  late TextEditingController amountController;
-  late TextEditingController descriptionController;
+  TextEditingController jobDetailsController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String? selectedCountry;
   String? selectedCurrency;
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (widget.invoiceModel != null) {
-        for (int i = 1; i < widget.invoiceModel!.fixedList.length; ++i) {
-          setState(() {
-            serviceControllers.add(ServiceControllerObject(
-              jobDetailsController: TextEditingController(
-                  text: widget.invoiceModel?.fixedList[i].itemName),
-              amountController: TextEditingController(
-                  text: widget.invoiceModel?.fixedList[i].price.toString()),
-              descriptionController: TextEditingController(
-                  text: widget.invoiceModel?.fixedList[i].description),
-            ));
-            servicesWidgetList.add(
-              ServiceCustomWidget(
-                amountController: serviceControllers[i - 1].amountController,
-                descriptionController:
-                    serviceControllers[i - 1].descriptionController,
-                jobDetailsController:
-                    serviceControllers[i - 1].jobDetailsController,
-              ),
-            );
-          });
-        }
-      }
-    });
-    selectedCountry = widget.invoiceModel?.clientAddress["country"];
-    selectedCurrency = widget.invoiceModel?.currency;
-
-    firstNameController = TextEditingController(
-        text: (widget.invoiceModel?.clientName.contains(" ") ?? false)
-            ? widget.invoiceModel?.clientName.split(" ")[0]
-            : widget.invoiceModel?.clientName);
-    lastNameController = TextEditingController(
-        text: (widget.invoiceModel?.clientName.contains(" ") ?? false)
-            ? widget.invoiceModel?.clientName.split(" ")[1]
-            : widget.invoiceModel?.clientName);
-    emailController =
-        TextEditingController(text: widget.invoiceModel?.clientEmail);
-    jobDetailsController =
-        TextEditingController(text: widget.invoiceModel?.fixedList[0].itemName);
-    amountController = TextEditingController(
-        text: widget.invoiceModel?.fixedList[0].price.toString());
-    descriptionController = TextEditingController(
-        text: widget.invoiceModel?.fixedList[0].description);
-  }
-
-  @override
-  void dispose() {
-    firstNameController.dispose();
-    lastNameController.dispose();
-    emailController.dispose();
-    jobDetailsController.dispose();
-    amountController.dispose();
-    descriptionController.dispose();
-    serviceControllers.forEach((element) {
-      element.amountController.dispose();
-      element.descriptionController.dispose();
-      element.jobDetailsController.dispose();
-    });
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
-    print(widget.invoiceModel);
     return Scaffold(
       // resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar(
-        title: widget.invoiceModel != null ? 'Edit Invoice' : 'Create Invoice',
+      appBar: const CustomAppBar(
+        title: 'Create Invoice',
         backButton: true,
       ),
       body: Form(
@@ -367,10 +294,8 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
                   height: 32,
                 ),
                 CustomButtonWidget(
-                  text: widget.invoiceModel != null
-                      ? 'Save Changes'
-                      : 'Preview Invoice',
-                  isLoading: context.watch<InvoiceProvider>().loading,
+                  text: 'Preview Invoice',
+                  isLoading: false,
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
                       Map<String, dynamic> map = {
@@ -385,14 +310,10 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
                         "fixed": servicesMap(),
                         "currency": selectedCurrency
                       };
-
-                      widget.invoiceModel != null
-                          ? context.read<InvoiceProvider>().editInvoice(
-                              id: widget.invoiceModel!.id, data: map)
-                          : AppRouter.goTo(
-                              ScreenName.invoicePreviewScreen,
-                              object: CreateInvoiceModel.fromJson(map),
-                            );
+                      AppRouter.goTo(
+                        ScreenName.invoicePreviewScreen,
+                        object: CreateInvoiceModel.fromJson(map),
+                      );
                     }
                   },
                 )
@@ -433,6 +354,9 @@ class _CreateInvoiceScreenState extends State<CreateInvoiceScreen> {
 
     return data;
   }
+
+  List<Widget> servicesWidgetList = [];
+  List<ServiceControllerObject> serviceControllers = [];
 }
 
 class ServiceControllerObject {

@@ -272,8 +272,9 @@ class _PreviewInvoiceScreenState extends State<PreviewInvoiceScreen> {
                                 const Text(
                                   'Total',
                                   style: TextStyle(
-                                      fontSize: 15,
-                                      color: AppColor.subtitleColor),
+                                    fontSize: 15,
+                                    color: AppColor.subtitleColor,
+                                  ),
                                 ),
                                 const SizedBox(
                                   width: 60,
@@ -293,41 +294,37 @@ class _PreviewInvoiceScreenState extends State<PreviewInvoiceScreen> {
                   ],
                 ),
               ),
-              Expanded(
-                child: CustomButtonWidget(
-                  isLoading: context.watch<InvoiceProvider>().loading,
-                  onPressed: () {
-                    context.read<InvoiceProvider>().createInvoice(
-                          token: SharedPrefController().getUser().accessToken,
-                          data: widget.createInvoiceModel.toJson(),
-                        );
-                  },
-                  text: 'Send Invoice',
-                ),
+              CustomButtonWidget(
+                isLoading: context.watch<InvoiceProvider>().loading,
+                onPressed: () {
+                  context.read<InvoiceProvider>().createInvoice(
+                        token: SharedPrefController().getUser().accessToken,
+                        data: widget.createInvoiceModel.toJson(),
+                      );
+                },
+                text: 'Send Invoice',
               ),
               const SizedBox(
                 height: 20,
               ),
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () {
-                    AppRouter.back();
-                  },
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(7),
-                        side: const BorderSide(
-                          color: AppColor.borderColor,
-                        ),
+              ElevatedButton(
+                onPressed: () {
+                  AppRouter.back();
+                },
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(7),
+                      side: const BorderSide(
+                        color: AppColor.borderColor,
                       ),
-                      minimumSize: const Size(double.infinity, 44)),
-                  child: const Text(
-                    'Edit',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.blue,
                     ),
+                    minimumSize: const Size(double.infinity, 44)),
+                child: const Text(
+                  'Edit',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.blue,
                   ),
                 ),
               )

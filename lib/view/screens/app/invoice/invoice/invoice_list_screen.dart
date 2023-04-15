@@ -450,13 +450,13 @@ class _InvoiceListScreenState extends State<InvoiceListScreen> {
                                                         ),
                                                         ElevatedButton(
                                                           onPressed: () {
-                                                            UtilsConfig
-                                                                .showSnackBarMessage(
-                                                              message:
-                                                                  '😄 هذا الزر خارج الخدمة *أعمال صيانة*ء😄',
-                                                              status: true,
+                                                            AppRouter.goTo(
+                                                              ScreenName
+                                                                  .createInvoiceScreen,
+                                                              object: invoiceProvider
+                                                                      .invoices[
+                                                                  index],
                                                             );
-                                                            AppRouter.back();
                                                           },
                                                           style: ElevatedButton
                                                               .styleFrom(
@@ -567,26 +567,28 @@ class _InvoiceListScreenState extends State<InvoiceListScreen> {
                                                     const SizedBox(
                                                       height: 7,
                                                     ),
-                                                    Text(
-                                                      invoiceProvider
-                                                              .invoices[index]
-                                                              .status
-                                                              .contains('_')
-                                                          ? invoiceProvider
-                                                              .invoices[index]
-                                                              .status
-                                                              .replaceAll(
-                                                                  '_', " ")
-                                                          : invoiceProvider
-                                                              .invoices[index]
-                                                              .status,
-                                                      style: TextStyle(
-                                                          color: statusColor(
-                                                              invoiceProvider
-                                                                  .invoices[
-                                                                      index]
-                                                                  .status
-                                                                  .toLowerCase())),
+                                                    FittedBox(
+                                                      child: Text(
+                                                        invoiceProvider
+                                                                .invoices[index]
+                                                                .status
+                                                                .contains('_')
+                                                            ? invoiceProvider
+                                                                .invoices[index]
+                                                                .status
+                                                                .replaceAll(
+                                                                    '_', " ")
+                                                            : invoiceProvider
+                                                                .invoices[index]
+                                                                .status,
+                                                        style: TextStyle(
+                                                            color: statusColor(
+                                                                invoiceProvider
+                                                                    .invoices[
+                                                                        index]
+                                                                    .status
+                                                                    .toLowerCase())),
+                                                      ),
                                                     ),
                                                   ],
                                                 ),

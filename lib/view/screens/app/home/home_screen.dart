@@ -45,30 +45,36 @@ class HomeScreen extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Text(
-                    '\$ ${SharedPrefController().getUser().userInfo.balance}',
-                    style: const TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w600,
+                  Expanded(
+                    flex: 4,
+                    child: Text(
+                      '\$ ${SharedPrefController().getUser().userInfo.balance.toStringAsFixed(2)}',
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   const SizedBox(
                     width: 20,
                   ),
-                  Container(
-                    height: 35,
-                    width: 40,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 227, 242, 255),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: IconButton(
-                      color: Colors.blue,
-                      onPressed: () {},
+                  Flexible(
+                    child: Container(
+                      height: 35,
+                      width: 40,
                       alignment: Alignment.center,
-                      icon: const Icon(
-                        Icons.file_download_outlined,
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 227, 242, 255),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: IconButton(
+                        color: Colors.blue,
+                        onPressed: () {},
+                        alignment: Alignment.center,
+                        icon: const Icon(
+                          Icons.file_download_outlined,
+                        ),
                       ),
                     ),
                   )

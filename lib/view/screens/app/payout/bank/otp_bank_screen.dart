@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:talents_valley_hackthon/controller/localData/shared_perf.dart';
 import 'package:talents_valley_hackthon/controller/provider/authProvider/authprovider.dart';
+import 'package:talents_valley_hackthon/controller/provider/payoutProvider/bnb_provider.dart';
 import 'package:talents_valley_hackthon/controller/provider/payoutProvider/payout_provider.dart';
 import 'package:talents_valley_hackthon/utils/responsive.dart';
 import 'package:talents_valley_hackthon/view/router/app_router.dart';
@@ -12,7 +13,6 @@ import 'package:talents_valley_hackthon/view/shared/custom_rich_text.dart';
 import 'package:talents_valley_hackthon/view/shared/otp_widget.dart';
 
 import '../../../../../utils/constant.dart';
-
 
 class OtpBankScreen extends StatefulWidget {
   const OtpBankScreen({
@@ -116,6 +116,7 @@ class _OtpBankScreenState extends State<OtpBankScreen> {
                           fourthControllerField.text +
                           fifthControllerField.text +
                           sixthControllerField.text;
+                     
                       context.read<PayoutProvider>().addBankAccount(
                             token: SharedPrefController().getUser().accessToken,
                             accountName: widget.bankInfo.accountName,

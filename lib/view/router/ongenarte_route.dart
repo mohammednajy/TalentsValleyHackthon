@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:talents_valley_hackthon/controller/models/create_invoice_model.dart';
+import 'package:talents_valley_hackthon/controller/models/invoice_model.dart';
 import 'package:talents_valley_hackthon/controller/models/recipient_model.dart';
 import 'package:talents_valley_hackthon/controller/provider/payoutProvider/payout_provider.dart';
 import 'package:talents_valley_hackthon/view/router/router_name.dart';
@@ -136,7 +137,8 @@ Route onGenerateRoute(RouteSettings settings) {
           ));
     case ScreenName.createInvoiceScreen:
       return MaterialPageRoute(
-          builder: (context) => const CreateInvoiceScreen(),
+          builder: (context) => CreateInvoiceScreen(
+              invoiceModel: settings.arguments as InvoiceModel?),
           settings: const RouteSettings(
             name: ScreenName.createInvoiceScreen,
           ));

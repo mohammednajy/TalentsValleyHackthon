@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class InvoiceModel {
   final String id;
   final String clientId;
@@ -68,6 +69,11 @@ class InvoiceModel {
       updatedAt: json["updatedAt"],
     );
   }
+
+  @override
+  String toString() {
+    return 'InvoiceModel(id: $id, clientId: $clientId, clientName: $clientName, clientEmail: $clientEmail, clientAddress: $clientAddress, currency: $currency, fixedList: $fixedList, freelancerName: $freelancerName, freelancerEmail: $freelancerEmail, freelancerId: $freelancerId, createdAt: $createdAt, updatedAt: $updatedAt, subTotal: $subTotal, hashcode: $hashcode, status: $status)';
+  }
 }
 
 class FixedModel {
@@ -89,6 +95,11 @@ class FixedModel {
       price: json["price"],
       sId: json["_id"],
     );
+  }
+
+  @override
+  String toString() {
+    return 'FixedModel(itemName: $itemName, description: $description, price: $price, sId: $sId)';
   }
 }
 

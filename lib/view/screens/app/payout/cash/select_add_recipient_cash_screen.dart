@@ -441,10 +441,11 @@ class _SelectAddRecipientCashScreenState
                       officeInfo!.sId,
                       selectedRecipient!.sId
                     ]);
+                  } else {
+                    setState(() {
+                      error = true;
+                    });
                   }
-                  setState(() {
-                    error = true;
-                  });
                 },
               )
             ],
